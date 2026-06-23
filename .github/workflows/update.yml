@@ -1,0 +1,24 @@
+name: Update website
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 2 1 * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    uses: berkeley-cdss/course-site-actions/.github/workflows/course-overview-update.yml@main
+    with:
+      SIS_SUBJECT_AREA: ${{ vars.SIS_SUBJECT_AREA }}
+      SIS_CATALOG_NUMBER: ${{ vars.SIS_CATALOG_NUMBER }}
+      AUTHOR: ${{ vars.AUTHOR }}
+      GOOGLE_ANALYTICS_TAG: ${{ vars.GOOGLE_ANALYTICS_TAG }}
+      COURSE_DATA_FILE: ${{ vars.COURSE_DATA_FILE || '/dev/null' }}
+      GIT_NAME: ${{ vars.GIT_NAME }}
+      GIT_EMAIL: ${{ vars.GIT_EMAIL }}
+    secrets:
+      SIS_COURSE_API_ID: ${{ secrets.SIS_COURSE_API_ID }}
+      SIS_COURSE_API_KEY: ${{ secrets.SIS_COURSE_API_KEY }}
